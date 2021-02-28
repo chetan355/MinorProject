@@ -11,9 +11,9 @@ import javax.swing.JTextField;
  */
 public class NewUser extends javax.swing.JFrame implements KeyListener{
     Connection con = null;
-    PreparedStatement pst;
-    ResultSet rs;
-    Statement st = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+//    Statement pst = null;
     public NewUser() {
         initComponents();
         setLocationRelativeTo(this);
@@ -283,13 +283,13 @@ public class NewUser extends javax.swing.JFrame implements KeyListener{
         try
         {
             String sql = "select username from login_tabel where username = '"+user+"'";
-            st = con.createStatement();
-            rs = st.executeQuery(sql);
+            pst = con.prepareStatement(sql);
+            rs = pst.executeQuery(sql);
             
             if(fname_txt.getText().equals(""))
                 JOptionPane.showMessageDialog(this,"First Name Required");            
             else if(mname_txt.getText().equals(""))
-                JOptionPane.showMessageDialog(this,"Middle Name Required");                        
+                JOptionPane.showMessageDialog(this,"Middle Name Required");
             else if(lname_txt.getText().equals(""))
                 JOptionPane.showMessageDialog(this,"Last Name Required");                        
             else if(pass_txt1.getText().equals(""))
@@ -319,6 +319,7 @@ public class NewUser extends javax.swing.JFrame implements KeyListener{
         fname_txt.setText(null);
         mname_txt.setText(null);
         lname_txt.setText(null);
+        username_txt.setText(null);
         pass_txt1.setText(null);
         pass_txt2.setText(null);        
         new_btn.setEnabled(false);

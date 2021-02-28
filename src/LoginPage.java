@@ -34,24 +34,25 @@ public class LoginPage extends javax.swing.JFrame {
         jPanel1.setBackground(new Color(0, 0, 0,60));
         dbconnect();        
         curr_user = user;
-    }
+    }    
     public void back_image()
     {
-        ImageIcon icon = new ImageIcon("./images/back_img.jpg");
+        ImageIcon icon = new ImageIcon("./images/food_back.jpg");
         Image img = icon.getImage();
         Image imgscale = img.getScaledInstance(jLabel2.getWidth(),jLabel2.getHeight(),Image.SCALE_SMOOTH);
         ImageIcon scaledimg = new ImageIcon(imgscale);
         jLabel2.setIcon(scaledimg);
     }
+    
     public void dbconnect()
     {
         try 
         {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-            String path = "D:\\NetBeans _Java_Applications\\foodOrderSystemdb.accdb";
+            String path = "db/foodOrderSystemdb.accdb";
             String url = "jdbc:ucanaccess://"+path;
             con = DriverManager.getConnection(url);
-        } 
+        }
         catch (Exception ex) 
         {
             System.out.println(ex);
@@ -220,11 +221,11 @@ public class LoginPage extends javax.swing.JFrame {
             if(rs.next())
             {
                 JOptionPane.showMessageDialog(rootPane,"login successfully...");
-                new MainFrame(curr_user).show();
+                new FoodOrderFrame(rs.getString("first_name")).show();
                 dispose();
             }
             else
-                JOptionPane.showMessageDialog(rootPane,"Invalid Credentials...");
+                JOptionPane.showMessageDialog(rootPane,"Invalid Credentials...","Alert",JOptionPane.WARNING_MESSAGE);
         }catch(SQLException e)
         {
             System.out.println(e);
